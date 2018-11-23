@@ -14,4 +14,10 @@
     <Folder Include="ClientApp\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Test_For_NewComers.BLL\Test_For_NewComers.BLL.csproj" />
+    <ProjectReference Include="..\Test_For_NewComers.DAL\Test_For_NewComers.DAL.csproj" />
+    <ProjectReference Include="..\Test_For_NewComers.Model\Test_For_NewComers.Model.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -5,9 +5,6 @@ namespace Test_For_NewComers.DAL
 {
     public class DisciplesContext : DbContext
     {
-        public DisciplesContext(DbContextOptions<DisciplesContext> options) : base(options)
-        {
-        }
 
         public DbSet<AcedemicDiscipleBlocks> AcedemicDiscipleBlocks { get; set; }
 
@@ -20,5 +17,9 @@ namespace Test_For_NewComers.DAL
         public DbSet<Faculty> Faculties { get; set; }
 
         public DbSet<Specialty> Specialties { get; set; }
+
+        public DisciplesContext(DbContextOptions<DisciplesContext> options) : base(options)
+        {
+        }
     }
 }
