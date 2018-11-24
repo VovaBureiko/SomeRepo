@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,8 +10,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Test_For_NewComers.AppStart;
 
-namespace Test_For_NewComers
+namespace WebApplication1
 {
     public class Startup
     {
@@ -25,14 +28,7 @@ namespace Test_For_NewComers
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
-
+            IoCConfig.RegisterDependencies(services, Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -45,21 +41,18 @@ namespace Test_For_NewComers
             }
             else
             {
-                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
-            app.UseDefaultFiles();
+            app.UseHttpsRedirection();
+            app.UseMvc();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.Run(async (context) =>
             {
                 context.Response.ContentType = "text/html";
                 await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
             });
-
-            app.UseMvc();
         }
     }
 }

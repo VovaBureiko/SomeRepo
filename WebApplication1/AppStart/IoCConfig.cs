@@ -12,6 +12,7 @@ namespace Test_For_NewComers.AppStart
         public static void RegisterDependencies(IServiceCollection services, IConfiguration configuration)
         {
             RegisterContext(services, configuration);
+            RegisterServices(services);
         }
 
         private static void RegisterContext(IServiceCollection services, IConfiguration configuration)

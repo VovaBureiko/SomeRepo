@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { TestingPageComponent } from './components/testing-page/testing-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { SelectYourDestinyComponent } from './components/select-your-destiny/select-your-destiny.component';
+import { HttpClientModule } from '@angular/common/http';
+import { SpecializationService } from './services/specializationService';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,10 @@ import { SelectYourDestinyComponent } from './components/select-your-destiny/sel
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [SpecializationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

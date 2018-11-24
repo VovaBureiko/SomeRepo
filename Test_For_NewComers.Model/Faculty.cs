@@ -13,6 +13,6 @@ namespace Test_For_NewComers.Model
         [Column("Name")]
         public string Name { get; set; }
 
-        public virtual ICollection<Departament> Departaments { get; set; }
+        public List<Departament> Departaments { get; set; }
     }
 }

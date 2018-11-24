@@ -4,6 +4,7 @@ using Test_For_NewComers.BLL.Interfaces;
 
 namespace Test_For_NewComers.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class TestController : Controller
     {
@@ -15,12 +16,15 @@ namespace Test_For_NewComers.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("specialization")]
+        public async Task<IActionResult> Specialization()
         {
             var specializations = await _testPreparation.GetAllSpecializations();
 
             return Ok(specializations);
         }
+
+        [HttpGet("disciple")]
+        public async Task<IActionResult> GetDisciple()
     }
 }

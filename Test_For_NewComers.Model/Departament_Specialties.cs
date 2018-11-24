@@ -8,12 +8,12 @@ namespace Test_For_NewComers.Model
     {
         public int Id { get; set; }
 
-        public virtual Specialty Specialty { get; set; }
+        public Specialty Specialty { get; set; }
 
-        public virtual Departament Departament { get; set; }
+        public Departament Departament { get; set; }
 
-        public virtual List<AdacemicDisciples> AdacemicDisciples { get; set; }
+        public List<AdacemicDisciples> AdacemicDisciples { get; set; }
 
-        public virtual List<AcedemicDiscipleBlocks> AcedemicDiscipleBlocks { get; set; }
+        public List<Specializations> Specializations { get; set; }
     }
 }

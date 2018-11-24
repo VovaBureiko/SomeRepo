@@ -10,8 +10,11 @@ namespace Test_For_NewComers.Model
         [Key]
         public int Id { get; set; }
 
-        public virtual Departament_Specialties Specialty { get; set; }
+        [Column("block_sum")]
+        public decimal? Sum { get; set; }
 
-        public virtual ICollection<AdacemicDisciples> AdacemicDisciples { get; set; }
+        public string Label { get; set; }
+
+        public List<AdacemicDisciples> AdacemicDisciples { get; set; }
     }
 }

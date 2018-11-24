@@ -24,5 +24,7 @@ namespace Test_For_NewComers.BLL.Services
 
             return disciples.Select(disciple => disciple.ToSpecializationDto()).ToList();
         }
+
+        public async Task<List<>>
     }
 }

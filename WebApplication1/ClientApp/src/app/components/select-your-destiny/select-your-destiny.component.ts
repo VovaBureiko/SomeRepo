@@ -13,6 +13,7 @@ export class SelectYourDestinyComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.testItem);
   }
 
 }
