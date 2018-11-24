@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@import './assets/reset';
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.button {
+  background: transparent;
+  border: 1px solid #444;
+  font-weight: 300;
+  color: #444;
+  transition: 1s;
+
+  &:hover {
+    background: #444;
+    color: #FFF;
+  }
+}

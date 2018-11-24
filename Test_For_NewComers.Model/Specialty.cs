@@ -13,6 +13,6 @@ namespace Test_For_NewComers.Model
         [Column("Name")]
         public string Name { get; set; }
 
-        public virtual AcedemicDiscipleBlocks AcedemicDiscipleBlocks { get; set; }
+        public virtual Departament_Specialties AcedemicDiscipleBlocks { get; set; }
     }
 }

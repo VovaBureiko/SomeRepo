@@ -53,7 +53,6 @@ namespace Test_For_NewComers
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-
             app.Run(async (context) =>
             {
                 context.Response.ContentType = "text/html";

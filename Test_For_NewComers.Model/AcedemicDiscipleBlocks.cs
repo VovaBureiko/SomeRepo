@@ -10,7 +10,7 @@ namespace Test_For_NewComers.Model
         [Key]
         public int Id { get; set; }
 
-        public virtual Specialty Specialty { get; set; }
+        public virtual Departament_Specialties Specialty { get; set; }
 
         public virtual ICollection<AdacemicDisciples> AdacemicDisciples { get; set; }
     }
