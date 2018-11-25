@@ -15,5 +15,7 @@ namespace Test_For_NewComers.Model
         public List<AdacemicDisciples> AdacemicDisciples { get; set; }
 
         public List<Specializations> Specializations { get; set; }
+
+        public List<AcedemicDiscipleBlocks> AcedemicDiscipleBlocks { get; set; }
     }
 }
