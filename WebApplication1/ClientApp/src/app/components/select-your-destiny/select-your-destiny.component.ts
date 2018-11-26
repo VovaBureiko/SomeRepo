@@ -1,19 +1,26 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TestItem } from './models/testItem';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-select-your-destiny',
   templateUrl: './select-your-destiny.component.html',
   styleUrls: ['./select-your-destiny.component.scss']
 })
-export class SelectYourDestinyComponent implements OnInit {
+export class SelectYourDestinyComponent {
 
-  @Input() testItem : TestItem
-  
-  constructor() { }
+  @Input() Label : string;
+  @Input() _name: string
+  @Input() _formGroup : FormGroup
 
-  ngOnInit() {
-    console.log(this.testItem);
+  public get returnCurrentId() : string{
+    return this._name;
   }
 
+  public get returnFormGroup() : FormGroup {
+      return this._formGroup;
+  }
+
+  constructor(private _formBuilder: FormBuilder) {
+ 
+  }
 }

@@ -11,6 +11,7 @@ namespace Test_For_NewComers.Model
         [Column("id_discipl")]
         public int Id { get; set; }
 
+        [Column("nazvan")]
         public string Name { get; set; }
 
         public List<AdacemicDisciples> AdacemicDisciples { get; set; }

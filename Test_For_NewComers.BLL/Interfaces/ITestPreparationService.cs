@@ -8,6 +8,6 @@ namespace Test_For_NewComers.BLL.Interfaces
 {
     public interface ITestPreparationService
     {
-        Task<List<SpecializationDTO>>GetAllSpecializations();
+        Task<TestPreparationDTO>GetAllSpecializations();
     }
 }

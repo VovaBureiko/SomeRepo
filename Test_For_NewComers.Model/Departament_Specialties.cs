@@ -8,8 +8,10 @@ namespace Test_For_NewComers.Model
     {
         public int Id { get; set; }
 
+        [ForeignKey("id_specialties")]
         public Specialty Specialty { get; set; }
 
+        [ForeignKey("id_departament")]
         public Departament Departament { get; set; }
 
         public List<AdacemicDisciples> AdacemicDisciples { get; set; }

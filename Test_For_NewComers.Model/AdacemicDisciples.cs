@@ -12,17 +12,20 @@ namespace Test_For_NewComers.Model
 
         public int Term { get; set; }
 
-        public decimal? Credit { get; set; }
+        public double Credit { get; set; }
 
-        public decimal? Score { get; set; }
+        public double Score { get; set; }
 
         [Column("course_project")]
         public bool? CourseProject { get; set; }
 
+        [ForeignKey("block_id")]
         public AcedemicDiscipleBlocks AcedemicDiscipleBlocks { get; set; }
 
+        [ForeignKey("depart_spec_id")]
         public Departament_Specialties Departament_Specialties { get; set; }
 
+        [ForeignKey("disc_id")]
         public Disciplines Disciplines { get; set; }
     }
 }

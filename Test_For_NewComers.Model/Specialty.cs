@@ -14,6 +14,6 @@ namespace Test_For_NewComers.Model
         [Column("Name")]
         public string Name { get; set; }
 
-        public List<Departament_Specialties> AcedemicDiscipleBlocks { get; set; }
+        public List<Departament_Specialties> Departament_Specialties { get; set; }
     }
 }

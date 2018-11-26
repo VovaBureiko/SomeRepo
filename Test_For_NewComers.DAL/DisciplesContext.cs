@@ -18,6 +18,8 @@ namespace Test_For_NewComers.DAL
 
         public DbSet<Specialty> Specialties { get; set; }
 
+        public DbSet<Departament_Specialties> Departament_Specialties { get; set; }
+
         public DisciplesContext(DbContextOptions<DisciplesContext> options) : base(options)
         {
         }

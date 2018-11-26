@@ -11,12 +11,11 @@ namespace Test_For_NewComers.Model
         public int Id { get; set; }
 
         [Column("block_sum")]
-        public decimal? Sum { get; set; }
+        public double Sum { get; set; }
 
         public string Label { get; set; }
 
-        public List<AdacemicDisciples> AdacemicDisciples { get; set; }
-
+        [ForeignKey("depart_spec_id")]
         public Departament_Specialties Departament_Specialties { get; set; }
     }
 }

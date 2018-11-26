@@ -14,6 +14,8 @@ namespace Test_For_NewComers.Model
 
         public string Name { get; set; }
 
+        public int? Departament_SpecialtiesId { get; set; }
+
         public Departament_Specialties Departament_Specialties { get; set; }
     }
 }

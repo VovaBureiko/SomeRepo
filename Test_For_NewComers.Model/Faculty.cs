@@ -8,6 +8,7 @@ namespace Test_For_NewComers.Model
     public class Faculty
     {
         [Key]
+        [Column("id_faculty")]
         public int Id { get; set; }
 
         [Column("Name")]

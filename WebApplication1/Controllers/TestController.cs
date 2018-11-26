@@ -21,10 +21,7 @@ namespace Test_For_NewComers.Controllers
         {
             var specializations = await _testPreparation.GetAllSpecializations();
 
-            return Ok(specializations);
+            return Json(specializations);
         }
-
-        [HttpGet("disciple")]
-        public async Task<IActionResult> GetDisciple()
     }
 }
