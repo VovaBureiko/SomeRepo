@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,24 +23,43 @@ namespace Test_For_NewComers.BLL.Services
 
         public async Task<TestPreparationDTO> GetAllSpecializations()
         {
-            var specialties = GetAllSpealities();
-            var departamnetSpecilities =  GetAllDepartamnetSpecility();
-            var disciples =  GetAllDisciples();
-            var acadimSubjects =  GetAllAcademicDisciples();
-            var blocks =  GetAllBlocks();
+            var specialties = await GetAllSpealities();
 
-            await Task.WhenAll(specialties, departamnetSpecilities, disciples, acadimSubjects, blocks);
+            var userId = Guid.NewGuid().ToString();
 
             var result = new TestPreparationDTO
             {
-                Disciples = disciples.Result.Select(disc => disc.ToDiscipleDto()).ToList(),
-                AcademicDiscipleDTO = acadimSubjects.Result.Select(subject => subject.ToAcademicDiscDto()).ToList(),
-                BlocksDTO = blocks.Result.Select(block => block.ToDesciplesBlockDto()).ToList(),
-                DepartSpecialDTO = departamnetSpecilities.Result.Select(depart => depart.ToDepartamnetSpecializationDto()).ToList(),
-                SpecializationDTO = specialties.Result.Select(special => special.ToSpecializationDto()).ToList()
+                UserId = userId,
+                SpecializationDTO = specialties.Select(speciality => speciality.ToSpecializationDto()).ToList()
             };
 
             return result;
+        }
+
+        private async Task SaveUserInformationInDatabase(string userId)
+        {
+            var departamnetSpecilities = GetAllDepartamnetSpecility();
+            var disciples = GetAllDisciples();
+            var acadimSubjects = GetAllAcademicDisciples();
+            var blocks = GetAllBlocks();
+
+            await Task.WhenAll(departamnetSpecilities, disciples, acadimSubjects, blocks);
+
+            var departamnetSpecialityString = JsonConvert.SerializeObject(departamnetSpecilities);
+            var discipleString = JsonConvert.SerializeObject(disciples);
+            var academicDiscipleString = JsonConvert.SerializeObject(acadimSubjects);
+            var blockString = JsonConvert.SerializeObject(blocks);
+
+            var user = new UserResults
+            {
+                UserId = userId,
+                AcademicDisciple = academicDiscipleString,
+                Disciple = discipleString,
+                SpecialityByDepartment = departamnetSpecialityString,
+                DiscipleBlock = blockString
+            };
+
+            await _disciplesContext.UserResults.AddAsync(user);
         }
 
         private Task<List<Disciplines>>GetAllDisciples()
