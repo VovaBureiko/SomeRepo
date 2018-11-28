@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +13,8 @@ import { TestingAreaComponent } from './components/testing-area/testing-area.com
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ConnectionService } from './services/testing.connection.service';
+import { LogicService } from './services/logic';
+import { Mapper } from './models/mapper';
 
 @NgModule({
   declarations: [
@@ -27,13 +30,18 @@ import { ConnectionService } from './services/testing.connection.service';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   exports: [
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [SpecializationService, ConnectionService],
+  providers: [
+    SpecializationService, 
+    ConnectionService,
+    LogicService,
+    Mapper],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

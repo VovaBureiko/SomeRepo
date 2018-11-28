@@ -4,6 +4,8 @@ import { ISpecialization, IDiscipleBlocks, IDisciple, IAcademicDisciple, IDepart
 import { TestItem } from '../select-your-destiny/models/testItem';
 import { ConnectionService } from 'src/app/services/testing.connection.service';
 import { FormGroup } from '@angular/forms';
+import { LogicService } from 'src/app/services/logic';
+import { Mapper } from 'src/app/models/mapper';
 
 @Component({
   selector: 'app-testing-page',
@@ -23,14 +25,21 @@ export class TestingPageComponent implements OnInit {
   _self: any;
 
   constructor(private _specializationService : SpecializationService, 
-              private _connectionService: ConnectionService) {
+              private _connectionService: ConnectionService,
+              private _logic: LogicService,
+              private _mapper: Mapper) {
                 this.processSpecialities = this.processSpecialities.bind(this);
+                this.processDisciples = this.processDisciples.bind(this);
                }
 
   ngOnInit() {
     this._specializationService.getSpecializations().subscribe(response => {
-       this._allSpecializations = response.specializationDTO;
-       this._discipleBlocks = response.blocksDTO;
+       this._allSpecializations = response.specializationDTO.map(element => {
+            return this._mapper.toSpecialization(element);
+       });
+       this._discipleBlocks = response.blocksDTO.map(element => {
+         return this._mapper.toDiscipleBlock(element);
+       });
        this._disciples = response.disciples;
        this._academicDisc = response.academicDiscipleDTO;
        this._departamentSpec = response.departSpecialDTO;
@@ -45,16 +54,26 @@ export class TestingPageComponent implements OnInit {
 
 
   private processSpecialities(formGroup: FormGroup) : void {
-    this.processDisciples();
+    this._logic.processSpecialization(this._allSpecializations, formGroup);
+    let isAllSpecilizationShown = this._logic.isAllSpecilititesChecked(this._allSpecializations);
+    if (isAllSpecilizationShown === true) {
+      this._connectionService.getReference().unsubscribe();
+      this._connectionService.getReference().subscribe(this.processDisciples);
+      this.firstDisciples();
+    } 
   }
 
-  private processDisciples() {
-    this._testItems = this._discipleBlocks.sort((first, second) => {
-      return second.score - first.score;
-    }).slice(0,4).map(element => {
-      return new TestItem(element.id, element.label)
-    });
+  private processDisciples(formGroup : FormGroup) {
+    this._logic.setUpCheckedDisciples(this._discipleBlocks, formGroup);
+
+    this._testItems = this._logic.getDisciplesBlocks(5, this._discipleBlocks).map(element => {
+      return new TestItem(element.id, element.label);
+    })
   }
 
-
+  private firstDisciples(){
+    this._testItems = this._logic.getDisciplesBlocks(5, this._discipleBlocks).map(element => {
+      return new TestItem(element.id, element.label);
+    })
+  }
 }

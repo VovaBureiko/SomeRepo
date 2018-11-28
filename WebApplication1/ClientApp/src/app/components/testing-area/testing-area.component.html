@@ -1,6 +1,8 @@
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-    <div *ngFor="let item of _testItems">
-        <app-select-your-destiny [Label]="item.label" [_formGroup]="formGroup" [_name]="item.id"></app-select-your-destiny>
-    </div>
-    <input type="submit" value="Next">
-</form>
+<div class="text-center">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div *ngFor="let item of _testItems">
+            <app-select-your-destiny [Label]="item.label" [_formGroup]="formGroup" [_name]="item.id"></app-select-your-destiny>
+        </div>
+        <input type="submit" class="btn btn-success" value="Next">
+    </form>
+</div>

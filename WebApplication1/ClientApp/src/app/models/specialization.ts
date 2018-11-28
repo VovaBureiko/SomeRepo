@@ -9,7 +9,8 @@ export interface IDiscipleBlocks {
     id : number,
     label : string,
     score: number,
-    specilaDepartamnt: number
+    specilaDepartamnt: number,
+    isShown: boolean
 }
 
 export interface IDisciple {
