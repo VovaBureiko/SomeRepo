@@ -1,17 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Test_For_NewComers.BLL.DTO;
+using Test_For_NewComers.BLL.Interfaces;
 using Test_For_NewComers.DAL;
 using Test_For_NewComers.Model;
 
 namespace Test_For_NewComers.BLL.Services
 {
-    public class AnalyzerService
+    public class AnalyzerService : ITestAnalyzer
     {
         private readonly DisciplesContext _discipleContext;
 
@@ -31,6 +30,9 @@ namespace Test_For_NewComers.BLL.Services
             var blocks = JsonConvert.DeserializeObject<List<DisciplesBlocksDTO>>(userValue.DiscipleBlock);
 
             ProcessSpecial(blocks, dictionary);
+
+            userValue.DiscipleBlock = JsonConvert.SerializeObject(blocks);
+            _discipleContext.UserResults.Update(userValue);
 
             return blocks.OrderBy(block => block.Score).Where(value => !value.IsShown).ToList();
         }

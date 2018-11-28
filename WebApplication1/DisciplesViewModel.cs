@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
 
-        public decimal Value { get; set; }
+        public string Label { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace Test_For_NewComers.AppStart
         private static void RegisterServices(IServiceCollection services)
         {
             services.AddTransient<ITestPreparationService, PreparationService>();
+            services.AddTransient<ITestAnalyzer, AnalyzerService>();
         }
     }
 }
