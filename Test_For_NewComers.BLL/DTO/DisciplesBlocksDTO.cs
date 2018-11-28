@@ -9,5 +9,9 @@
         public double Score { get; set; }
 
         public int SpecialDepartment { get; set; }
+
+        public bool IsShown { get; set; }
+
+        public float SpecValue { get; set; }
     }
 }

@@ -10,8 +10,14 @@
 
         public double Credit { get; set; }
 
-        public double Score { get; set; }
+        public float Score { get; set; }
+
+        public float NewScore { get; set; }
 
         public int SpecialDepartment { get; set; }
+
+        public int BlockId { get; set; }
+
+        public bool IsShown { get; set; }
     }
 }

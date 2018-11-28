@@ -24,7 +24,6 @@ namespace Test_For_NewComers.BLL.Services
         public async Task<TestPreparationDTO> GetAllSpecializations()
         {
             var specialties = await GetAllSpealities();
-
             var userId = Guid.NewGuid().ToString();
 
             var result = new TestPreparationDTO
