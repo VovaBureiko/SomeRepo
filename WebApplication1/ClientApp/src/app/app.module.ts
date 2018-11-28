@@ -12,6 +12,7 @@ import { TestingAreaComponent } from './components/testing-area/testing-area.com
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ConnectionService } from './services/testing.connection.service';
+import { LogicService } from './services/logic';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { ConnectionService } from './services/testing.connection.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [SpecializationService, ConnectionService],
+  providers: [SpecializationService, ConnectionService, LogicService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

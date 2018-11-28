@@ -18,8 +18,7 @@ export class Mapper {
             id : block.id,
             label : block.label,
             score : block.score,
-            specilaDepartamnt : block.SpecialDepartment,
-            isShown : false
+            specilaDepartamnt : block.SpecialDepartment
         }
     }
 }

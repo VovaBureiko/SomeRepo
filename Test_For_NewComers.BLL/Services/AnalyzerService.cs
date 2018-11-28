@@ -19,11 +19,38 @@ namespace Test_For_NewComers.BLL.Services
             _discipleContext = context;
         }
 
-        public async Task<List<DisciplesBlocksDTO>> AnalyzeSelectedSpecialization(
-            string userId,
-            Dictionary<int, float> userChoose)
+        public async Task<List<DisciplesBlocksDTO>> AnalyzeUserChoose(
+            Dictionary<int, float> userChoose, 
+            string userId)
         {
             var userValue = await _discipleContext.UserResults.FirstAsync(id => id.UserId == userId);
+
+            if (!userValue.IsSpecializationProcessed)
+            {
+                return await AnalyzeSelectedSpecialization(userChoose, userValue);
+            }
+
+            var academicDisciples = JsonConvert.DeserializeObject<List<AcademicDiscipleDTO>>(userValue.AcademicDisciple);
+            var disciples = JsonConvert.DeserializeObject<List<DiscipleDTO>>(userValue.Disciple);
+            var blocks = JsonConvert.DeserializeObject<List<DisciplesBlocksDTO>>(userValue.DiscipleBlock);
+
+            var ids = GetDiscplesIds(academicDisciples, userChoose);
+
+            SetUpCheckedValueForAcademicDisciples(blocks, userChoose.Keys.ToArray());
+            setUpValuesForDisciple(disciples, ids);
+            RecalculateAcademicDisciples(disciples, academicDisciples);
+            RecalculateBlocks(academicDisciples, blocks);
+
+            UpdateBlocks(academicDisciples, disciples, blocks, userValue);
+            _discipleContext.SaveChanges();
+
+            return blocks.OrderBy(block => block.Score).Where(value => !value.IsShown).ToList();
+        }
+
+        private Task<List<DisciplesBlocksDTO>> AnalyzeSelectedSpecialization(
+           Dictionary<int, float> userChoose,
+           UserResults userValue)
+        {
             var departmaneSpecial = JsonConvert.DeserializeObject<List<DepartSpecialDTO>>(userValue.SpecialityByDepartment);
             var dictionary = GetDisciplesDictionary(departmaneSpecial, userChoose);
 
@@ -32,28 +59,14 @@ namespace Test_For_NewComers.BLL.Services
             ProcessSpecial(blocks, dictionary);
 
             userValue.DiscipleBlock = JsonConvert.SerializeObject(blocks);
+            userValue.IsSpecializationProcessed = true;
+
             _discipleContext.UserResults.Update(userValue);
 
-            return blocks.OrderBy(block => block.Score).Where(value => !value.IsShown).ToList();
-        }
+            _discipleContext.SaveChanges();
 
-        public async Task<List<DisciplesBlocksDTO>> AnalyzeUserChoose(
-            Dictionary<int, float> userChoose, 
-            string userId)
-        {
-            var userValue = await _discipleContext.UserResults.FirstAsync(id => id.UserId == userId);
-            var academicDisciples = JsonConvert.DeserializeObject<List<AcademicDiscipleDTO>>(userValue.DiscipleBlock);
-            var disciples = JsonConvert.DeserializeObject<List<DiscipleDTO>>(userValue.Disciple);
-            var blocks = JsonConvert.DeserializeObject<List<DisciplesBlocksDTO>>(userValue.DiscipleBlock);
-
-            var ids = GetDiscplesIds(academicDisciples, userChoose);
-            setUpValuesForDisciple(disciples, ids);
-            RecalculateAcademicDisciples(disciples, academicDisciples);
-            RecalculateBlocks(academicDisciples, blocks);
-
-            UpdateBlocks(academicDisciples, disciples, blocks, userValue);
-
-            return blocks.OrderBy(block => block.Score).Where(value => !value.IsShown).ToList();
+            var result = blocks.OrderByDescending(block => block.Score).Where(value => !value.IsShown).ToList();
+            return Task.FromResult(result);
         }
 
         private Dictionary<int, float> GetDiscplesIds(
@@ -116,7 +129,7 @@ namespace Test_For_NewComers.BLL.Services
             {
                 var block = blocksDTOs.First(id => id.Id == item.BlockId);
                 block.Score = item.Score * block.SpecValue;
-                if (!block.IsShown)
+                if(item.IsShown)
                 {
                     block.IsShown = item.IsShown;
                 }
@@ -148,8 +161,19 @@ namespace Test_For_NewComers.BLL.Services
 
             foreach (var item in userInputs.Keys)
             {
-                var departId = departSpecialDTOs.First(id => id.SpecialId == item).Id;
-                departSpecial.Add(departId, userInputs[item]);
+                var departamnets = departSpecialDTOs.Where(id => id.SpecialId == item).ToList();
+                if (departamnets.Count > 1)
+                {
+                    foreach (var id in departamnets)
+                    {
+                        departSpecial.Add(id.Id, userInputs[item]);
+                    }
+                }
+
+                else
+                {
+                    departSpecial.Add(departamnets.First().Id, userInputs[item]);
+                }
             }
 
             return departSpecial;
@@ -167,6 +191,14 @@ namespace Test_For_NewComers.BLL.Services
                         disciplBlocks.Score *= userInmputs[item];
                     }
                 }
+            }
+        }
+
+        private void SetUpCheckedValueForAcademicDisciples(List<DisciplesBlocksDTO> academicDiscipleDTOs, int[]ids)
+        {
+            foreach(var id in ids)
+            {
+                academicDiscipleDTOs.First(element => element.Id == id).IsShown = true;
             }
         }
     }

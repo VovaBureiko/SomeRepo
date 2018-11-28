@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Test_For_NewComers.Model
 {
     [Table("User_Results")]
     public class UserResults
     {
+        [Key]
         public string UserId { get; set; }
 
         [Column("speciality_by_department")]
@@ -17,5 +19,8 @@ namespace Test_For_NewComers.Model
 
         [Column("disciple_block")]
         public string DiscipleBlock { get; set; }
+
+        [Column("is_all_specialities")]
+        public bool IsSpecializationProcessed { get; set; }
     }
 }

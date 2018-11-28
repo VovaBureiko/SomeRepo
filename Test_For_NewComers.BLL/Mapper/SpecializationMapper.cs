@@ -23,7 +23,9 @@ namespace Test_For_NewComers.BLL.Mapper
             {
                 Id = source.Id,
                 Label = source.Label,
-                Score = source.Sum
+                Score = source.Sum,
+                IsShown = false,
+                SpecialDepartment = source.Departament_Specialties.Id
             };
         }
 
@@ -32,7 +34,8 @@ namespace Test_For_NewComers.BLL.Mapper
             return new DiscipleDTO
             {
                 Id =source.Id,
-                Weight = 1
+                Weight = 1,
+                IsShown = false
             };
 
         }
@@ -54,9 +57,11 @@ namespace Test_For_NewComers.BLL.Mapper
                 Id = source.Id,
                 Credit = source.Credit,
                 DiscplId = source.Disciplines.Id,
-                Score = source.Score,
                 Term = source.Term,
-                SpecialDepartment = source.Departament_Specialties.Id
+                SpecialDepartment = source.Departament_Specialties.Id,
+                BlockId = source.AcedemicDiscipleBlocks.Id,
+                IsShown = false,
+                Score = (float)source.Score
             };
         }
     }

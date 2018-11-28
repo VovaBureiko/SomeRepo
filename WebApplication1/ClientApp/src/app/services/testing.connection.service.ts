@@ -17,5 +17,9 @@ export class ConnectionService {
 
     sendTestItterationResult(formGroup: FormGroup) {
         this._resultSubject.next(formGroup);
-    } 
+    }
+
+    recreateLink() {
+        this._resultSubject = new Subject<FormGroup>();
+    }
 }

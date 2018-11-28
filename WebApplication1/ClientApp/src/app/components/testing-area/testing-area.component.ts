@@ -19,6 +19,8 @@ export class TestingAreaComponent implements OnChanges {
 
     ngOnChanges() {
         if (this._testItems) {
+            this.formGroup = null;
+            this.controlList = [];
             this._testItems.forEach(element => {
                 this.controlList[element.id] = '';
             });

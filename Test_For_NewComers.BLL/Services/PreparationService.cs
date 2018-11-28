@@ -26,6 +26,8 @@ namespace Test_For_NewComers.BLL.Services
             var specialties = await GetAllSpealities();
             var userId = Guid.NewGuid().ToString();
 
+            await SaveUserInformationInDatabase(userId);
+
             var result = new TestPreparationDTO
             {
                 UserId = userId,
@@ -44,10 +46,12 @@ namespace Test_For_NewComers.BLL.Services
 
             await Task.WhenAll(departamnetSpecilities, disciples, acadimSubjects, blocks);
 
-            var departamnetSpecialityString = JsonConvert.SerializeObject(departamnetSpecilities);
-            var discipleString = JsonConvert.SerializeObject(disciples);
-            var academicDiscipleString = JsonConvert.SerializeObject(acadimSubjects);
-            var blockString = JsonConvert.SerializeObject(blocks);
+            
+
+            var departamnetSpecialityString = JsonConvert.SerializeObject(departamnetSpecilities.Result.Select(element => element.ToDepartamnetSpecializationDto()).ToList());
+            var discipleString = JsonConvert.SerializeObject(disciples.Result.Select(element => element.ToDiscipleDto()));
+            var academicDiscipleString = JsonConvert.SerializeObject(acadimSubjects.Result.Select(element => element.ToAcademicDiscDto()).ToList());
+            var blockString = JsonConvert.SerializeObject(blocks.Result.Select(block => block.ToDesciplesBlockDto()).ToList());
 
             var user = new UserResults
             {
@@ -59,6 +63,8 @@ namespace Test_For_NewComers.BLL.Services
             };
 
             await _disciplesContext.UserResults.AddAsync(user);
+
+            await _disciplesContext.SaveChangesAsync();
         }
 
         private Task<List<Disciplines>>GetAllDisciples()

@@ -36,15 +36,20 @@ namespace Test_For_NewComers.Controllers
             return Json(model);
         }
 
-        public async Task<IActionResult> ProcessSpecialization(Dictionary<int, float> userChoose, string userId)
+        [HttpPost("disciples")]
+        public async Task<IActionResult> ProcessSpecialization([FromBody]UserInputViewModelcs userChoose)
         {
-            var blocks = await _testAnalyzer.AnalyzeSelectedSpecialization(userId, userChoose);
+            var blocks = await _testAnalyzer.AnalyzeUserChoose(userChoose.userChoose, userChoose.UserId);
 
             var model = blocks.Take(10).Select(block => new
             {
                 block.Id,
                 block.Label
             });
+            if (model.Count() == 0)
+            {
+                return BadRequest();
+            }
 
             return Json(model);
         }
