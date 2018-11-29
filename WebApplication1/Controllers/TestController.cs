@@ -46,11 +46,7 @@ namespace Test_For_NewComers.Controllers
                 block.Id,
                 block.Label
             });
-            if (model.Count() == 0)
-            {
-                return BadRequest();
-            }
-
+ 
             return Json(model);
         }
     }

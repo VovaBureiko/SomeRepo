@@ -7,6 +7,7 @@ import { FormGroup } from '@angular/forms';
 import { LogicService } from 'src/app/services/logic';
 import { SendData } from 'src/app/models/prepearingData';
 import { NgOnChangesFeature, bind } from '@angular/core/src/render3';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-testing-page',
@@ -24,7 +25,8 @@ export class TestingPageComponent implements OnInit, OnChanges {
 
   constructor(private _specializationService : SpecializationService, 
               private _connectionService: ConnectionService,
-              private _logic : LogicService) {
+              private _logic : LogicService,
+              private _router: Router) {
                 this.processSpecialities = this.processSpecialities.bind(this);
                 this.processSelectingDisciples = this.processSelectingDisciples.bind(this);
                 this.processResponse = this.processResponse.bind(this);
@@ -65,6 +67,9 @@ export class TestingPageComponent implements OnInit, OnChanges {
   }
 
   private processResponse(response : any[]) {
+    if (response.length == 0) {
+      this._router.navigate(['endtest/', this._userId]);
+    }
     this._testItems = response.map(element => {
       return new TestItem(element.id, element.label);
     });

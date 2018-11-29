@@ -13,6 +13,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ConnectionService } from './services/testing.connection.service';
 import { LogicService } from './services/logic';
+import { EndTestModule } from './components/end-test/end-test.module';
 
 @NgModule({
   declarations: [
@@ -28,11 +29,14 @@ import { LogicService } from './services/logic';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    AppRoutingModule,
+    EndTestModule
   ],
   exports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule
   ],
   providers: [SpecializationService, ConnectionService, LogicService],
   bootstrap: [AppComponent]
