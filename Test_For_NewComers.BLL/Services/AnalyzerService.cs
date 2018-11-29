@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,14 @@ namespace Test_For_NewComers.BLL.Services
     public class AnalyzerService : ITestAnalyzer
     {
         private readonly DisciplesContext _discipleContext;
+        private readonly ILogger<AnalyzerService> _logger;
 
-        public AnalyzerService(DisciplesContext context)
+        public AnalyzerService(
+            DisciplesContext context, 
+            ILogger<AnalyzerService> logger)
         {
             _discipleContext = context;
+            _logger = logger;
         }
 
         public async Task<List<DisciplesBlocksDTO>> AnalyzeUserChoose(
@@ -36,12 +41,14 @@ namespace Test_For_NewComers.BLL.Services
 
             var ids = GetDiscplesIds(academicDisciples, userChoose);
 
+            SetUserChoose(blocks, userChoose);
             SetUpCheckedValueForAcademicDisciples(blocks, userChoose.Keys.ToArray());
             setUpValuesForDisciple(disciples, ids);
             RecalculateAcademicDisciples(disciples, academicDisciples);
             RecalculateBlocks(academicDisciples, blocks);
 
             UpdateBlocks(academicDisciples, disciples, blocks, userValue);
+
             _discipleContext.SaveChanges();
 
             return blocks.OrderBy(block => block.Score).Where(value => !value.IsShown).ToList();
@@ -61,8 +68,10 @@ namespace Test_For_NewComers.BLL.Services
             userValue.DiscipleBlock = JsonConvert.SerializeObject(blocks);
             userValue.IsSpecializationProcessed = true;
 
+            _logger.LogCritical(userValue.UserId + userValue.DiscipleBlock);
             _discipleContext.UserResults.Update(userValue);
 
+            
             _discipleContext.SaveChanges();
 
             var result = blocks.OrderByDescending(block => block.Score).Where(value => !value.IsShown).ToList();
@@ -120,7 +129,7 @@ namespace Test_For_NewComers.BLL.Services
             var groupedBlocks = academicDiscipleDTOs.GroupBy(id => id.BlockId)
                 .Select(block => new
                 {
-                    Score = block.Sum(score => score.Score),
+                    Score = block.Sum(score => score.NewScore),
                     BlockId = block.Key,
                     IsShown = block.All(status => status.IsShown)
                 }).OrderBy(id => id.BlockId);
@@ -146,6 +155,7 @@ namespace Test_For_NewComers.BLL.Services
             var disciplesString = JsonConvert.SerializeObject(disciples);
             var academicString = JsonConvert.SerializeObject(academicDisciples);
 
+            _logger.LogCritical("The UserId: {userId} the results:{results} ", userResults.UserId, blocksString);
             userResults.Disciple = disciplesString;
             userResults.DiscipleBlock = blocksString;
             userResults.AcademicDisciple = academicString;
@@ -199,6 +209,14 @@ namespace Test_For_NewComers.BLL.Services
             foreach(var id in ids)
             {
                 academicDiscipleDTOs.First(element => element.Id == id).IsShown = true;
+            }
+        }
+
+        private void SetUserChoose(List<DisciplesBlocksDTO> blocksDTOs, Dictionary<int, float> userChoose)
+        {
+            foreach(var key in userChoose.Keys)
+            {
+                blocksDTOs.First(id => id.Id == key).UserChoose = userChoose[key];
             }
         }
     }

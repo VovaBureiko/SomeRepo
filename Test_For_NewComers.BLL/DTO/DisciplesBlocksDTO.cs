@@ -13,5 +13,7 @@
         public bool IsShown { get; set; }
 
         public float SpecValue { get; set; }
+
+        public float UserChoose { get; set; }
     }
 }
