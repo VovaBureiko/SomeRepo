@@ -21,6 +21,8 @@ namespace Test_For_NewComers.DAL
 
         public DbSet<UserResults> UserResults { get; set; }
 
+        public DbSet<Specializations> Specializations { get; set; }
+
         public DisciplesContext(DbContextOptions<DisciplesContext> options) : base(options)
         {
         }

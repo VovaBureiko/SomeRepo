@@ -11,9 +11,5 @@ namespace Test_For_NewComers.Controllers
     [ApiController]
     public class EndTestController : ControllerBase
     {
-        public async Task<IActionResult> Result(string userId)
-        {
-
-        }
     }
 }
