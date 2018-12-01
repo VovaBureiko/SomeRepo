@@ -69,9 +69,9 @@ namespace Test_For_NewComers.BLL.Services
             userValue.IsSpecializationProcessed = true;
 
             _logger.LogCritical(userValue.UserId + userValue.DiscipleBlock);
+
             _discipleContext.UserResults.Update(userValue);
 
-            
             _discipleContext.SaveChanges();
 
             var result = blocks.OrderByDescending(block => block.Score).Where(value => !value.IsShown).ToList();

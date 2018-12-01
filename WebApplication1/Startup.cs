@@ -39,7 +39,7 @@ namespace WebApplication1
         {
             Log.Logger = new LoggerConfiguration()
                             .Enrich.FromLogContext().MinimumLevel.Fatal()
-                            .WriteTo.File("log.json")
+                            .WriteTo.Map("userId", (userId, wt) => wt.File($"./logs/userId-{userId}.json"))
                             .CreateLogger();
 
             if (env.IsDevelopment())
