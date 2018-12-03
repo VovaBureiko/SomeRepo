@@ -14,6 +14,7 @@ namespace Test_For_NewComers.Model
 
         public string Name { get; set; }
 
+        [ForeignKey("id_dep_spec")]
         public Departament_Specialties Departament_Specialties { get; set; }
     }
 }

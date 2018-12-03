@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpParams} from '@angular/common/http';
 import { Observable, Subject } from "rxjs";
 import { SendData } from "../models/prepearingData";
 import { IRecievedData } from "../models/receivedData";
@@ -9,6 +9,7 @@ export class SpecializationService {
     
     private _specialization = 'https://localhost:44356/api/test/specialization';
     private _disciples = 'https://localhost:44356/api/test/disciples'
+    private _result = 'https://localhost:44356/api/endtest/result';
     private _disciplesLink : Subject<any>;
 
     public get getDisciplesLink() {
@@ -26,5 +27,9 @@ export class SpecializationService {
 
     public getDisciples(sendData: SendData) {
          return this._http.post<any>(this._disciples, sendData);
+    }
+
+    public getFinalResult(userId: string) {
+        return this._http.get<any>(this._result, {params: new HttpParams().set('userId', userId)});
     }
 }

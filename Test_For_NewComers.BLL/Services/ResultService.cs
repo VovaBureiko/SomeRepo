@@ -27,7 +27,7 @@ namespace Test_For_NewComers.BLL.Services
         {
             var userValue = await _disciplesContext.UserResults.FirstAsync(id => id.UserId == userId);
 
-            var academicDisciples = JsonConvert.DeserializeObject<List<AcademicDiscipleDTO>>(userValue.Disciple);
+            var academicDisciples = JsonConvert.DeserializeObject<List<AcademicDiscipleDTO>>(userValue.AcademicDisciple);
 
             var groupedAcademicDisciples = academicDisciples.GroupBy(group => group.SpecialDepartment)
                                                             .Select(group => new
@@ -36,17 +36,19 @@ namespace Test_For_NewComers.BLL.Services
                                                                 Sum = group.Sum(score => score.NewScore)
                                                             }).ToList();
 
-            var departamnets = await _disciplesContext.Specializations.ToListAsync();
+            var departamnets = await _disciplesContext.Specializations
+                .Include(p => p.Departament_Specialties)
+                .ToListAsync();
 
             List<ResultDTO> totalResult = departamnets.Join(groupedAcademicDisciples,
                                specialization => specialization.Departament_Specialties.Id,
                                grouped => grouped.SpecializDepartamnetId,
-                               (spec, grouped) => new
+                               (spec, grouped) => new ResultDTO
                                {
                                    Id = spec.Id,
                                    Name = spec.Name,
                                    Score = grouped.Sum / MaxValue
-                               }).Cast<ResultDTO>().ToList();
+                               }).ToList();
 
             var logData = JsonConvert.SerializeObject(totalResult);
             _logger.LogCritical("The final result is", userId, logData);
