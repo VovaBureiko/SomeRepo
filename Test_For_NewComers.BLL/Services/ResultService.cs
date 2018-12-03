@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,14 @@ namespace Test_For_NewComers.BLL.Services
     public class ResultService : IResultService
     {
         private readonly DisciplesContext _disciplesContext;
+        private readonly ILogger<ResultService> _logger;
         private const int MaxValue = 198;
 
-        public ResultService(DisciplesContext disciplesContext)
+        public ResultService(DisciplesContext disciplesContext,
+                            ILogger<ResultService> logger)
         {
             _disciplesContext = disciplesContext;
+            _logger = logger;
         }
 
         public async Task<List<ResultDTO>> GetSpecialityRaiting(string userId)
@@ -44,6 +48,8 @@ namespace Test_For_NewComers.BLL.Services
                                    Score = grouped.Sum / MaxValue
                                }).Cast<ResultDTO>().ToList();
 
+            var logData = JsonConvert.SerializeObject(totalResult);
+            _logger.LogCritical("The final result is", userId, logData);
             return totalResult;
         }
     }
