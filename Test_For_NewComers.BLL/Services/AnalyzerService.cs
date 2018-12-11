@@ -40,12 +40,14 @@ namespace Test_For_NewComers.BLL.Services
             var blocks = JsonConvert.DeserializeObject<List<DisciplesBlocksDTO>>(userValue.DiscipleBlock);
 
             var ids = GetDiscplesIds(academicDisciples, userChoose);
-
-            SetUserChoose(blocks, userChoose);
-            SetUpCheckedValueForAcademicDisciples(blocks, userChoose.Keys.ToArray());
-            setUpValuesForDisciple(disciples, ids);
-            RecalculateAcademicDisciples(disciples, academicDisciples);
+            SetDiscipleValue(ids, disciples);
+            SetAcademicDiscipline(academicDisciples, disciples);
+            RecalculateAcademicDisciples(academicDisciples);
             RecalculateBlocks(academicDisciples, blocks);
+            //SetUpCheckedValueForAcademicDisciples(blocks, userChoose.Keys.ToArray());
+            //setUpValuesForDisciple(disciples, ids);
+            //RecalculateAcademicDisciples(disciples, academicDisciples);
+            //RecalculateBlocks(academicDisciples, blocks);
 
             UpdateBlocks(academicDisciples, disciples, blocks, userValue);
 
@@ -79,14 +81,27 @@ namespace Test_For_NewComers.BLL.Services
         }
 
         private Dictionary<int, float> GetDiscplesIds(
-            List<AcademicDiscipleDTO> blocks,
+            List<AcademicDiscipleDTO> academicDisciples,
             Dictionary<int, float> userChoose)
         {
             var idUserChoose = new Dictionary<int, float>();
             foreach (var item in userChoose.Keys)
             {
-                var discipleId = blocks.First(academic => academic.BlockId == item).DiscplId;
-                idUserChoose.Add(discipleId, userChoose[item]);
+                var allAcademicDisciples = academicDisciples.Where(academic => academic.BlockId == item).ToList();
+                foreach (var academic in allAcademicDisciples)
+                {
+                    if(idUserChoose.ContainsKey(academic.DiscplId))
+                    {
+                        if(idUserChoose[academic.DiscplId] < userChoose[item])
+                        {
+                            idUserChoose[academic.DiscplId] = userChoose[item];
+                        }
+                    }
+                    else
+                    {
+                        idUserChoose.Add(academic.DiscplId, userChoose[item]);
+                    }
+                }
             }
 
             return idUserChoose;
@@ -102,11 +117,11 @@ namespace Test_For_NewComers.BLL.Services
                 {
                     if (disciples.Id == item)
                     {
-                        if (!disciples.IsShown)
+                        if (disciples.Weight < userChoose[item])
                         {
-                            disciples.IsShown = true;
                             disciples.Weight = userChoose[item];
                         }
+                        disciples.IsShown = true;
                     }
                 }
             }
@@ -138,10 +153,7 @@ namespace Test_For_NewComers.BLL.Services
             {
                 var block = blocksDTOs.First(id => id.Id == item.BlockId);
                 block.Score = item.Score * block.SpecValue;
-                if(item.IsShown)
-                {
-                    block.IsShown = item.IsShown;
-                }
+                block.IsShown = item.IsShown;
             }
         }
 
@@ -217,6 +229,40 @@ namespace Test_For_NewComers.BLL.Services
             foreach(var key in userChoose.Keys)
             {
                 blocksDTOs.First(id => id.Id == key).UserChoose = userChoose[key];
+            }
+        }
+
+        private void SetDiscipleValue(Dictionary<int, float> discipleValues, List<DiscipleDTO> discipleDTOs)
+        {
+            foreach (var key in discipleValues.Keys)
+            {
+                var disciple = discipleDTOs.First(id => id.Id == key);
+                if (disciple.Weight < discipleValues[key])
+                {
+                    disciple.Weight = discipleValues[key];
+                }
+                disciple.IsShown = true;
+            }
+        }
+
+        private void SetAcademicDiscipline(List<AcademicDiscipleDTO> academicDiscipleDTOs, List<DiscipleDTO> discipleDTOs)
+        {
+            foreach(var disciple in discipleDTOs)
+            {
+                var academicDisciples = academicDiscipleDTOs.Where(id => id.DiscplId == disciple.Id).ToList();
+                foreach (var academic in academicDisciples)
+                {
+                    academic.IsShown = disciple.IsShown;
+                    academic.DiscipleValue = disciple.Weight;
+                }
+            }
+        }
+
+        private void RecalculateAcademicDisciples(List<AcademicDiscipleDTO> academicDiscipleDTOs)
+        {
+            foreach (var academic in academicDiscipleDTOs)
+            {
+                academic.NewScore = academic.Score * academic.DiscipleValue;
             }
         }
     }

@@ -15,6 +15,8 @@ namespace Test_For_NewComers.Model
 
         public string Label { get; set; }
 
+        public List<AdacemicDisciples> AdacemicDisciples { get; set; }
+
         [ForeignKey("depart_spec_id")]
         public Departament_Specialties Departament_Specialties { get; set; }
     }

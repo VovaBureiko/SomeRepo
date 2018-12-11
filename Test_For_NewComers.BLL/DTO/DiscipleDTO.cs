@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public float Weight { get; set; }
+        public float Weight { get; set; } = 0;
 
         public bool IsShown { get; set; }
     }

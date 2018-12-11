@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import './assets/reset';
+@import './assets/mainStyles.scss';
 
 html, body {
   height: 100%;
@@ -20,4 +21,9 @@ body {
     background: #444;
     color: #FFF;
   }
+}
+
+.navber-img {
+  height: 25px;
+  width: 50px;
 }

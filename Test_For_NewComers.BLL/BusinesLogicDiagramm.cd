@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Test_For_NewComers.BLL.Services.AnalyzerService" HideInheritanceLine="true">
+    <Position X="0.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CBAAAAQAAAAGAAAAAABAAIAAIAAAAAQAAEAAQAAgBAA=</HashCode>
+      <FileName>Services\AnalyzerService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="1.175" />
+  </Class>
+  <Class Name="Test_For_NewComers.BLL.Services.PreparationService" HideInheritanceLine="true">
+    <Position X="5.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAiAgAAAAAAAAAAAAAAACAIAAAgAAEAA=</HashCode>
+      <FileName>Services\PreparationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.437" />
+  </Class>
+  <Class Name="Test_For_NewComers.BLL.Services.ResultService" HideInheritanceLine="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAgAAAAIAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Services\ResultService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Test_For_NewComers.BLL.Interfaces.IResultService">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IResultService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Test_For_NewComers.BLL.Interfaces.ITestAnalyzer">
+    <Position X="6.25" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ITestAnalyzer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Test_For_NewComers.BLL.Interfaces.ITestPreparationService">
+    <Position X="9.25" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ITestPreparationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

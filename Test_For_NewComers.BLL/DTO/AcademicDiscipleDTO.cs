@@ -19,5 +19,7 @@
         public int BlockId { get; set; }
 
         public bool IsShown { get; set; }
+
+        public float DiscipleValue { get; set; } = 0;
     }
 }

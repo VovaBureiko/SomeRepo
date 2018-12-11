@@ -14,7 +14,7 @@ namespace Test_For_NewComers.BLL.Services
     {
         private readonly DisciplesContext _disciplesContext;
         private readonly ILogger<ResultService> _logger;
-        private const int MaxValue = 198;
+        private const double MaxValue = 207.6375;
 
         public ResultService(DisciplesContext disciplesContext,
                             ILogger<ResultService> logger)
@@ -28,12 +28,21 @@ namespace Test_For_NewComers.BLL.Services
             var userValue = await _disciplesContext.UserResults.FirstAsync(id => id.UserId == userId);
 
             var academicDisciples = JsonConvert.DeserializeObject<List<AcademicDiscipleDTO>>(userValue.AcademicDisciple);
+            var blocks = JsonConvert.DeserializeObject<List<DisciplesBlocksDTO>>(userValue.DiscipleBlock);
 
-            var groupedAcademicDisciples = academicDisciples.GroupBy(group => group.SpecialDepartment)
+            //var groupedAcademicDisciples = academicDisciples.GroupBy(group => group.SpecialDepartment)
+            //                                                .Select(group => new
+            //                                                {
+            //                                                    SpecializDepartamnetId = group.Key,
+            //                                                    Sum = group.Sum(score => score.NewScore)
+            //                                                }).ToList();
+
+
+            var groupedAcademicDisciples = blocks.GroupBy(group => group.SpecialDepartment)
                                                             .Select(group => new
                                                             {
                                                                 SpecializDepartamnetId = group.Key,
-                                                                Sum = group.Sum(score => score.NewScore)
+                                                                Sum = group.Sum(score => score.Score)
                                                             }).ToList();
 
             var departamnets = await _disciplesContext.Specializations

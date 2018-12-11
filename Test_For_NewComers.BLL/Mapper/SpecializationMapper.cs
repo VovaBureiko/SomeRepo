@@ -34,7 +34,7 @@ namespace Test_For_NewComers.BLL.Mapper
             return new DiscipleDTO
             {
                 Id =source.Id,
-                Weight = 1,
+                Weight = 0,
                 IsShown = false
             };
 

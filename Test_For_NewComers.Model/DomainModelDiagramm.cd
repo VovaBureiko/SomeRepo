@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Test_For_NewComers.Model.UserResults">
+    <Position X="2.25" Y="3.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ABAEAAAAACAgAAAAAAAAAAgAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserResults.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Test_For_NewComers.Model.Specializations">
+    <Position X="12.5" Y="2" Width="1.5" />
+    <AssociationLine Name="Departament_Specialties" Type="Test_For_NewComers.Model.Departament_Specialties">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="1.466" Y="0.276" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAIAAAAAAEAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Specializations.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Departament_Specialties" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Test_For_NewComers.Model.Faculty">
+    <Position X="5.75" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Faculty.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Departaments" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Test_For_NewComers.Model.Disciplines">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Disciplines.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="AdacemicDisciples" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Test_For_NewComers.Model.Departament_Specialties">
+    <Position X="10.5" Y="4" Width="1.5" />
+    <AssociationLine Name="AcedemicDiscipleBlocks" Type="Test_For_NewComers.Model.AcedemicDiscipleBlocks" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.5" Y="5.488" />
+        <Point X="7.582" Y="5.488" />
+        <Point X="7.582" Y="5.779" />
+        <Point X="1.656" Y="5.779" />
+        <Point X="1.656" Y="3.43" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>BAACBAAAAAAAAAAEAAAAAAAAAAACAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Departament_Specialties.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Specializations" />
+      <Property Name="AcedemicDiscipleBlocks" />
+      <Property Name="AdacemicDisciples" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Test_For_NewComers.Model.Departament">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <AssociationLine Name="Departament_Specialties" Type="Test_For_NewComers.Model.Departament_Specialties">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.846" Y="0.109" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAIAAAAAAIAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Departament.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Faculty" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Departament_Specialties" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Test_For_NewComers.Model.AdacemicDisciples">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <AssociationLine Name="Departament_Specialties" Type="Test_For_NewComers.Model.Departament_Specialties">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.483" Y="1.495" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AQACBAIAAAAAAAgBQAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>AdacemicDisciples.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Disciplines" />
+      <Property Name="Departament_Specialties" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Test_For_NewComers.Model.AcedemicDiscipleBlocks">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>AcedemicDiscipleBlocks.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Departament_Specialties" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
